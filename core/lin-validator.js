@@ -33,9 +33,8 @@ class LinValidator {
         return get(this.parsed.default, key)
       }
       return value
-    } else {
-      return get(this.data, path)
     }
+    return get(this.data, path)
   }
 
   _findMembersFilter(key) {
@@ -56,7 +55,7 @@ class LinValidator {
 
   async validate(ctx, alias = {}) {
     this.alias = alias
-    let params = this._assembleAllParams(ctx)
+    const params = this._assembleAllParams(ctx)
     this.data = cloneDeep(params)
     this.parsed = cloneDeep(params)
 
@@ -66,7 +65,7 @@ class LinValidator {
 
     const errorMsgs = []
     // const map = new Map(memberKeys)
-    for (let key of memberKeys) {
+    for (const key of memberKeys) {
       const result = await this._check(key, alias)
       if (!result.success) {
         errorMsgs.push(result.msg)
@@ -80,7 +79,7 @@ class LinValidator {
   }
 
   async _check(key, alias = {}) {
-    const isCustomFunc = typeof this[key] == 'function' ? true : false
+    const isCustomFunc = typeof this[key] === 'function' ? true : false
     let result
     if (isCustomFunc) {
       try {
@@ -112,7 +111,7 @@ class LinValidator {
     if (!result.pass) {
       const msg = `${isCustomFunc ? '' : key}${result.msg}`
       return {
-        msg: msg,
+        msg,
         success: false,
       }
     }
@@ -186,7 +185,7 @@ class Rule {
 
   validate(field) {
     if (this.name == 'isOptional') return new RuleResult(true)
-    if (!validator[this.name](field + '', ...this.params)) {
+    if (!validator[this.name](`${field}`, ...this.params)) {
       return new RuleResult(false, this.msg || this.message || '参数错误')
     }
     return new RuleResult(true, '')
@@ -205,14 +204,13 @@ class RuleField {
       const defaultValue = this._hasDefault()
       if (allowEmpty) {
         return new RuleFieldResult(true, '', defaultValue)
-      } else {
-        return new RuleFieldResult(false, '字段是必填参数')
       }
+      return new RuleFieldResult(false, '字段是必填参数')
     }
 
     const filedResult = new RuleFieldResult(false)
-    for (let rule of this.rules) {
-      let result = rule.validate(field)
+    for (const rule of this.rules) {
+      const result = rule.validate(field)
       if (!result.pass) {
         filedResult.msg = result.msg
         filedResult.legalValue = null
@@ -224,7 +222,7 @@ class RuleField {
   }
 
   _convert(value) {
-    for (let rule of this.rules) {
+    for (const rule of this.rules) {
       if (rule.name == 'isInt') {
         return parseInt(value)
       }
@@ -239,7 +237,7 @@ class RuleField {
   }
 
   _allowEmpty() {
-    for (let rule of this.rules) {
+    for (const rule of this.rules) {
       if (rule.name == 'isOptional') {
         return true
       }
@@ -248,7 +246,7 @@ class RuleField {
   }
 
   _hasDefault() {
-    for (let rule of this.rules) {
+    for (const rule of this.rules) {
       const defaultValue = rule.params[0]
       if (rule.name == 'isOptional') {
         return defaultValue

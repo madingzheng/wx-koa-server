@@ -1,4 +1,4 @@
-const {LinValidator, Rule} = require('../../core/lin-validator')
+const { LinValidator, Rule } = require('../../core/lin-validator')
 
 class PositiveIntegerValidator extends LinValidator {
   constructor() {
@@ -8,5 +8,5 @@ class PositiveIntegerValidator extends LinValidator {
 }
 
 module.exports = {
-  PositiveIntegerValidator
+  PositiveIntegerValidator,
 }
