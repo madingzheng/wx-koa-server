@@ -1,3 +1,6 @@
+/**
+ * 错误类集合
+ */
 class HttpException extends Error {
   constructor(msg = '服务器错误', errorCode = 10000, code = 400) {
     super()

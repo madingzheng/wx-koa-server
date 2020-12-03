@@ -1,3 +1,7 @@
+/**
+ * 捕获异常
+ */
+
 const { HttpException } = require('../core/http-exception')
 const catchError = async (ctx, next) => {
   try {
