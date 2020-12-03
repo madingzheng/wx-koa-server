@@ -3,6 +3,7 @@
  */
 
 const { HttpException } = require('../core/http-exception')
+
 const catchError = async (ctx, next) => {
   try {
     await next()
@@ -13,10 +14,10 @@ const catchError = async (ctx, next) => {
     if (error instanceof HttpException) {
       ctx.body = {
         ...error,
-        request: `${ctx.method} ${ctx.path}`
+        request: `${ctx.method} ${ctx.path}`,
       }
     } else {
-      ctx.body  = '未知错误'
+      ctx.body = '未知错误'
     }
   }
 }

@@ -22,5 +22,5 @@ class ParameterException extends HttpException {
 
 module.exports = {
   HttpException,
-  ParameterException
+  ParameterException,
 }

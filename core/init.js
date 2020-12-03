@@ -1,10 +1,13 @@
-const Router = require("koa-router");
-const requireDirectory = require("require-directory");
+const Router = require('koa-router');
+const requireDirectory = require('require-directory');
 const catchError = require('../middlewares/exception')
 
 class InitManager {
   constructor(app) {
     InitManager.app = app
+  }
+
+  initCore() {
     InitManager.loadHttpException()
     InitManager.initLoadRouters()
     InitManager.initConfig()
@@ -26,10 +29,11 @@ class InitManager {
 
   /**
    * 初始化环境配置
-   * @param {路径}} path 
+   * @param {路径}} path
    */
   static initConfig(path = '') {
-    const configPath = path || process.cwd()+ '/config/config.js'
+    const configPath = path || `${process.cwd()}/config/config.js`
+    // eslint-disable-next-line import/no-dynamic-require
     const config = require(configPath)
     global.config = config
   }
