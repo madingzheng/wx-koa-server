@@ -12,7 +12,6 @@ router.get('/v1/book/detail', async (ctx, next) => {
 })
 
 router.post('/v1/:id/list', async (ctx, next) => {
-  // throw new ParameterException('ddd', 200)
   const v = await new PositiveIntegerValidator().validate(ctx)
   const id = v.get('path.id')
   ctx.body = {

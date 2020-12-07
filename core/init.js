@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const requireDirectory = require('require-directory');
+const Parser = require('koa-bodyparser')
 const catchError = require('../middlewares/exception')
 
 class InitManager {
@@ -8,9 +9,14 @@ class InitManager {
   }
 
   initCore() {
+    InitManager.parser()
     InitManager.loadHttpException()
     InitManager.initLoadRouters()
     InitManager.initConfig()
+  }
+
+  static parser() {
+    InitManager.app.use(Parser())
   }
 
   /**
